@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartStudy AI</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            📚 SmartStudy AI
+        </div>
+
+        <button class="btn-primary">
+            Get Started
+        </button>
+
+    </nav>
+
+    <section class="hero">
+
+        <h1>SmartStudy AI</h1>
+
+        <h2>Built for students. Powered by panic.</h2>
+
+        <p>
+            Upload notes, generate summaries,
+            create quizzes, and master concepts with AI.
+        </p>
+
+        <div class="hero-image">
+
+            <img
+            src="{{ url_for('static', filename='images1/image.png') }}"
+            alt="AI Study Assistant">
+
+        </div>
+
+    </section>
+
+    <section class="upload-section">
+
+        <div class="upload-box">
+
+            <div class="upload-icon">📄</div>
+
+            <h3>Drop your notes here</h3>
+
+            <p>PDF only (max 20MB)</p>
+
+            <form
+                action="/upload"
+                method="POST"
+                enctype="multipart/form-data">
+
+                <input
+                    type="file"
+                    name="pdf_file"
+                    accept=".pdf"
+                    required>
+
+                <br><br>
+
+                <button
+                    type="submit"
+                    class="upload-btn">
+
+                    Upload Notes
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+    <section class="features">
+
+        <a href="/summary" class="card">
+
+            <div class="icon">✨</div>
+
+            <h3>AI Summary</h3>
+
+            <p>
+                Convert lengthy notes into concise,
+                structured study material.
+            </p>
+
+        </a>
+
+        <a href="/quiz" class="card">
+
+            <div class="icon">📝</div>
+
+            <h3>Quiz Generator</h3>
+
+            <p>
+                Generate MCQs and test yourself instantly.
+            </p>
+
+        </a>
+
+        <a href="/chat" class="card">
+
+            <div class="icon">💬</div>
+
+            <h3>Chat with Notes</h3>
+
+            <p>
+                Ask questions directly from your notes.
+            </p>
+
+        </a>
+
+        <a href="/revision" class="card">
+
+            <div class="icon">🚀</div>
+
+            <h3>Revision Mode</h3>
+
+            <p>
+                Get last-minute revision notes quickly.
+            </p>
+
+        </a>
+
+    </section>
+
+    <div class="result-section">
+
+        {% if upload_success %}
+
+        <div class="result-card">
+
+            <h2>✅ Notes Uploaded Successfully</h2>
+
+        </div>
+
+        {% endif %}
+
+        {% if summary %}
+
+        <div class="result-card">
+
+            <h2>📄 AI Summary</h2>
+
+            <pre>{{ summary }}</pre>
+
+        </div>
+
+        {% endif %}
+        {% if revision_notes %}
+
+<div class="result-card">
+
+    <h2>🚀 Revision Mode</h2>
+
+    <pre>{{ revision_notes }}</pre>
+
+</div>
+
+{% endif %}
+
+        {% if mcqs %}
+
+        <div class="result-card">
+
+            <h2>🧠 Generated Quiz</h2>
+
+            <form action="/submit_quiz" method="POST">
+
+                {% for q in mcqs %}
+
+                <div class="quiz-card">
+
+                    <h3>{{ q.question }}</h3>
+
+                    {% set q_index = loop.index0 %}
+
+                    {% for option in q.options %}
+
+                    <label>
+
+                        <input
+                            type="radio"
+                            name="q{{ q_index }}"
+                            value="{{ option }}"
+                            required>
+
+                        {{ option }}
+
+                    </label>
+
+                    <br>
+
+                    {% endfor %}
+
+                </div>
+
+                <br>
+
+                {% endfor %}
+
+                <button
+                    type="submit"
+                    class="upload-btn">
+
+                    Submit Quiz
+
+                </button>
+
+            </form>
+
+        </div>
+
+        {% endif %}
+
+        {% if score is defined %}
+
+        <div class="result-card">
+
+            <h2>🏆 Quiz Result</h2>
+
+            <h3>
+                Score: {{ score }} / {{ total }}
+            </h3>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</body>
+</html>

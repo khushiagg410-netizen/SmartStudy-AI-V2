@@ -1,0 +1,106 @@
+
+    <section class="hero">
+
+    <h1>Choose Your Study Mode</h1>
+
+    <h2>Your notes are ready 🚀</h2>
+
+    <p>
+        Select an AI feature to start learning smarter.
+    </p>
+
+</section>
+<section class="features">
+
+    <a href="/summary" class="card">
+        <div class="icon">✨</div>
+        <h3>AI Summary</h3>
+        <p>Convert lengthy notes into concise, structured study material.</p>
+    </a>
+
+    <a href="/quiz" class="card">
+        <div class="icon">📝</div>
+        <h3>Quiz Generator</h3>
+        <p>Generate MCQs and flashcards automatically.</p>
+    </a>
+
+    <a href="/chat" class="card">
+        <div class="icon">💬</div>
+        <h3>Chat with Notes</h3>
+        <p>Ask questions directly from your uploaded notes.</p>
+    </a>
+
+    <a href="/revision" class="card">
+        <div class="icon">🚀</div>
+        <h3>Revision Mode</h3>
+        <p>Get ultra-focused last-minute revision notes.</p>
+    </a>
+
+</section>
+<section class="result-section">
+
+    {% if summary %}
+
+    <div class="result-card">
+
+        <h2>📄 AI Summary</h2>
+
+        <pre>{{ summary }}</pre>
+
+    </div>
+
+    {% endif %}
+
+    {% if mcqs %}
+
+    <div class="result-card">
+
+        <h2>🧠 Generated Quiz</h2>
+
+        <form action="/submit_quiz" method="POST">
+
+            {% for q in mcqs %}
+
+            <div class="quiz-card">
+
+                <h3>{{ q.question }}</h3>
+
+                {% set q_index = loop.index0 %}
+
+                {% for option in q.options %}
+
+                <label>
+
+                    <input
+                        type="radio"
+                        name="q{{ q_index }}"
+                        value="{{ option }}"
+                        required>
+
+                    {{ option }}
+
+                </label>
+
+                <br>
+
+                {% endfor %}
+
+            </div>
+
+            {% endfor %}
+
+            <button
+                type="submit"
+                class="upload-btn">
+
+                Submit Quiz
+
+            </button>
+
+        </form>
+
+    </div>
+
+    {% endif %}
+
+</section>

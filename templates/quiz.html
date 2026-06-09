@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+    <h1>🧠 AI Quiz</h1>
+
+    <form action="/submit_quiz" method="POST">
+
+    {% for q in mcqs %}
+
+    <div class="quiz-card">
+
+        <h3>Question {{ loop.index }}</h3>
+
+        <p>{{ q.question }}</p>
+
+        {% set q_index = loop.index0 %}
+
+        {% for option in q.options %}
+
+        <label>
+
+            <input
+                type="radio"
+                name="q{{ q_index }}"
+                value="{{ option }}"
+                required>
+
+            {{ option }}
+
+        </label>
+
+        <br>
+
+        {% endfor %}
+
+    </div>
+
+    {% endfor %}
+
+    <button type="submit" class="upload-btn">
+        Submit Quiz
+    </button>
+
+</form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SmartStudy AI Chat</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:linear-gradient(180deg,#071229,#020817);
+    color:white;
+    padding:40px;
+}
+
+.chat-container{
+    max-width:1000px;
+    margin:auto;
+}
+
+.heading{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.heading h1{
+    font-size:55px;
+    background:linear-gradient(90deg,#8b5cf6,#00d4ff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.heading p{
+    color:#b0b7c6;
+    margin-top:10px;
+}
+
+.chat-box{
+    
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:25px;
+    padding:30px;
+    backdrop-filter:blur(15px);
+}
+
+form{
+    display:flex;
+    gap:15px;
+}
+
+input[type="text"]{
+    flex:1;
+    padding:18px;
+    border:none;
+    outline:none;
+    border-radius:15px;
+    background:rgba(255,255,255,0.08);
+    color:white;
+    font-size:16px;
+}
+
+input[type="text"]::placeholder{
+    color:#9aa4b5;
+}
+
+button{
+    padding:18px 35px;
+    border:none;
+    border-radius:15px;
+    cursor:pointer;
+    color:white;
+    font-weight:600;
+    background:linear-gradient(90deg,#8b5cf6,#00d4ff);
+}
+
+.answer-card{
+    margin-top:30px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:20px;
+    padding:25px;
+}
+
+.answer-title{
+    color:#5eead4;
+    margin-bottom:15px;
+}
+
+.answer-text{
+    line-height:1.8;
+    color:#d8dce5;
+    white-space:pre-wrap;
+}
+
+.back-btn{
+    display:inline-block;
+    margin-bottom:25px;
+    text-decoration:none;
+    color:white;
+    padding:12px 22px;
+    border-radius:12px;
+    background:rgba(255,255,255,0.08);
+}
+
+.back-btn:hover{
+    background:rgba(255,255,255,0.15);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="chat-container">
+
+<a href="/" class="back-btn">
+⬅ Back to Dashboard
+</a>
+
+<div class="heading">
+
+<h1>💬 Chat With Notes</h1>
+
+<p>
+Ask anything from your uploaded notes and let AI explain it.
+</p>
+
+</div>
+
+<div class="chat-box">
+
+<form method="POST">
+
+<input
+type="text"
+name="question"
+placeholder="Ask a question from your notes..."
+required>
+
+<button type="submit">
+Ask AI
+</button>
+
+</form>
+
+{% if answer %}
+
+<div class="answer-card">
+
+<h2 class="answer-title">
+🤖 SmartStudy AI
+</h2>
+
+<div class="answer-text">
+{{ answer }}
+</div>
+
+</div>
+
+{% endif %}
+
+</div>
+
+</div>
+
+</body>
+</html>
